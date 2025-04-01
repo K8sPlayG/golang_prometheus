@@ -103,3 +103,35 @@ metadata:
 
 
 
+### Example Prometheus rules
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: example-prometheus-rule
+  namespace: monitoring
+spec:
+  groups:
+  - name: example.rules
+    rules:
+    - alert: HighCPUUsage
+      expr: avg(rate(process_cpu_seconds_total{job="example-app"}[5m])) > 0.9
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU usage detected"
+        description: "CPU usage for {{ $labels.job }} is above 90% for 2 minutes. Value: {{ $value }}"
+    - alert: InstanceDown
+      expr: up{job="example-app"} == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Instance is down"
+        description: "Instance {{ $labels.instance }} is down for 5 minutes."
+```
+
+
+
