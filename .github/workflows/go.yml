@@ -11,27 +11,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # container:
-    #   # Whenever the Go version is updated here, .promu.yml
-    #   # should also be updated.
-    #   image: quay.io/prometheus/golang-builder:1.23-base
+    container:
+      image: golang:1.20
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24.2'
+      # - name: Set up Go
+      #   uses: actions/setup-go@v5
+      #   with:
+      #     go-version: '1.24.2'
 
       - name: Check Go version
-        run: go version
-
-      - name: Set GOROOT
-        run: echo "GOROOT=$(go env GOROOT)" >> $GITHUB_ENV
-
-      - name: Check Go version (Again)
         run: go version
 
       - name: Install dependencies
