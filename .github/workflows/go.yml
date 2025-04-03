@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch: #enabled manual triggering
 
 jobs:
   build:
@@ -17,6 +18,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          clean: true
 
       # - name: Set up Go
       #   uses: actions/setup-go@v5
@@ -30,7 +33,7 @@ jobs:
         run: go mod tidy
 
       - name: Build
-        run: go build -v ./...
+        run: go build -v -buildvcs=false ./...
 
       - name: Test
         run: go test -v ./...
