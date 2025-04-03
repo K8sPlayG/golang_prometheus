@@ -21,6 +21,15 @@ jobs:
         with:
           go-version: 1.20
 
+      - name: Check Go version
+        run: go version
+
+      - name: Set GOROOT
+        run: echo "GOROOT=$(go env GOROOT)" >> $GITHUB_ENV
+
+      - name: Check Go version (Again)
+        run: go version
+
       - name: Install dependencies
         run: go mod tidy
 
