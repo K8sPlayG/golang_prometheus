@@ -194,5 +194,14 @@ func main() {
 
 	// Start the server
 	log.Println("Starting server on :8080")
+
+	go func() {
+		cnt := 0
+		for {
+			fmt.Printf("Counter = %d\n", cnt)
+			time.Sleep(5 * time.Second)
+			cnt += 1
+		}
+	}()
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
